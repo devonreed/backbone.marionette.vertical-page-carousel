@@ -14,6 +14,8 @@ var buffer = require('vinyl-buffer');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
+browserify().transform("babelify", {presets: ["es2015"]});
+
 // Bundle files with browserify
 gulp.task('browserify', function () {
   // set up the browserify instance on a task basis

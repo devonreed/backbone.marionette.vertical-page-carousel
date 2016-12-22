@@ -46,7 +46,7 @@ export default Marionette.LayoutView.extend({
 
         this.showChildView(this.currentRegion, new this.currentDef.view(this.data));
 
-        this.ui.container.find('.vertical-page-carousel__page').addClass('vertical-page-carousel-' + this.currentDef.key + '-page');
+        this.ui.container.find('.vertical-page-carousel__page').addClass(`vertical-page-carousel-${this.currentDef.key}-page`);
     },
 
     goUpTo(key) {
@@ -69,8 +69,8 @@ export default Marionette.LayoutView.extend({
         childView.on('attach', () => {
             _.delay(() => {
                 const newCurrentItemClass = direction == 'next' ? 'previous' : 'next';
-                this.getRegion(this.currentRegion).$el.removeClass('vertical-page-carousel-current-page').addClass('vertical-page-carousel-' + newCurrentItemClass + '-page');
-                this.getRegion(this.newRegion).$el.removeClass('vertical-page-carousel-' + direction + '-page').addClass('vertical-page-carousel-current-page');
+                this.getRegion(this.currentRegion).$el.removeClass('vertical-page-carousel-current-page').addClass(`vertical-page-carousel-${newCurrentItemClass}-page`);
+                this.getRegion(this.newRegion).$el.removeClass(`vertical-page-carousel-${direction}-page`).addClass('vertical-page-carousel-current-page');
                 setTimeout(() => {
                     this.finishAnimation();
                 }, 500); // css3 animation time
@@ -97,29 +97,20 @@ export default Marionette.LayoutView.extend({
     },
 
     createNewRegion(type) {
-        this.ui.container.append('<div class="vertical-page-carousel__page vertical-page-carousel-' + type + '-page">');
+        this.ui.container.append(`<div class="vertical-page-carousel__page vertical-page-carousel-${type}-page">`);
         this.regionIndex++;
-        const newIndex = "page" + this.regionIndex;
-        this.addRegion(newIndex, '.vertical-page-carousel-' + type + '-page');
+        const newIndex = `page${this.regionIndex}`;
+        this.addRegion(newIndex, `.vertical-page-carousel-${type}-page`);
 
         return newIndex;
     },
 
     getPageIndexByKey(key) {
-        var index = -1;
-        _.each(this.pages, function (item, i) {
-            if (item.key == key) {
-                index = i;
-                return;
-            }
-        });
-        return index;
+        return this.pages.findIndex((page) => page.key === key);
     },
 
     getPageDefByKey(key) {
-        return _.find(this.pages, function (item) {
-            return item.key == key;
-        });
+        return this.pages.find((page) => page.key === key);
     },
 
     navigateToPage(key) {
@@ -145,9 +136,9 @@ export default Marionette.LayoutView.extend({
         }
 
         const prevDef = this.currentDef.key;
-        this.ui.container.find('.vertical-page-carousel__page').removeClass('vertical-page-carousel-' + this.currentDef.key + '-page');
+        this.ui.container.find('.vertical-page-carousel__page').removeClass(`vertical-page-carousel-${this.currentDef.key}-page`);
         this.currentDef = this.getPageDefByKey(key);
-        this.ui.container.find('.vertical-page-carousel__page').addClass('vertical-page-carousel-' + this.currentDef.key + '-page');
+        this.ui.container.find('.vertical-page-carousel__page').addClass(`vertical-page-carousel-${this.currentDef.key}-page`);
 
         this.onNavigate(prevDef);
     },

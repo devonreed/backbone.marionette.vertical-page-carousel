@@ -1,0 +1,25 @@
+.vertical-page-carousel__content {
+    position: relative;
+    overflow: hidden;
+    height: calc(100% - 56px); // topbar height
+}
+
+.vertical-page-carousel__page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    transition: top 0.5s;
+}
+
+.vertical-page-carousel-previous-page {
+    top: -100%;
+}
+
+.vertical-page-carousel-current-page {
+    top: 0;
+}
+
+.vertical-page-carousel-next-page {
+    top: 100%;
+}

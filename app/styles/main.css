@@ -87,3 +87,8 @@ body {
     border-bottom: 0;
   }
 }
+
+.vertical-page-carousel {
+    height: 400px;
+    border: 1px solid #e5e5e5;
+}
